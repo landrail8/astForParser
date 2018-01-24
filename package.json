@@ -1,0 +1,61 @@
+{
+  "name": "astForParser",
+  "version": "0.0.1",
+  "description": "make AST-tree for parsing and compare two files",
+  "main": "dist/index.js",
+  "bin": {
+    "gendiff": "dist/bin/gendiff.js"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "engines": {
+    "node": "8"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "babel-node": "babel-node",
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "prepublishOnly": "npm run build",
+    "eslint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/landrail8/astForParser.git"
+  },
+  "author": "madgambler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/landrail8/astForParser/issues"
+  },
+  "homepage": "https://github.com/landrail8/astForParser#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.3",
+    "babel-jest": "^22.0.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^4.14.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-flowtype": "^2.40.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.5.0",
+    "jest": "^22.0.4",
+    "regenerator-runtime": "^0.11.1"
+  },
+  "dependencies": {
+    "commander": "^2.12.2",
+    "ini": "^1.3.5",
+    "js-yaml": "^3.10.0",
+    "readline-sync": "^1.4.7",
+    "lodash": "^4.17.4"
+  },
+  "config": {
+    "unsafe-perm": true
+  }
+}
