@@ -21,6 +21,47 @@ const f = (file1, file2) => {
   const obj1 = parse(format1)(text1);
   const obj2 = parse(format2)(text2);
 
+  console.log(obj1);
+  // console.log(obj2);
+
+  // соберем дерево по спарсенному объекту
+
+
+  const iter = (obj, arrayAST) => {
+
+    const arrForThisParent = _.keys(obj).reduce((acc, currentKey) => {
+
+      // console.log(_.keys(obj));
+      // console.log(currentKey);
+      // console.log(obj[currentKey]);
+
+
+      if (obj[currentKey] instanceof Object) {
+        acc.push({ key: currentKey, status: 'added', children: iter(obj[currentKey], arrayAST) });
+      } else {
+        acc.push({ key: currentKey, status: 'added' });
+      }
+      return acc;
+    }, []);
+
+    // console.log(arrForThisParent);
+
+    return [...arrayAST, ...arrForThisParent];
+  };
+  console.log(iter(obj1, []));
+
+  //
+  // const reduceTree = (f, tree, acc) => {
+  //   const [, children] = tree;
+  //   const newAcc = f(acc, tree);
+  //
+  //   if (!children) {
+  //     return newAcc;
+  //   }
+  //   return children.reduce((iAcc, n) => reduceTree(f, n, iAcc), newAcc);
+  // };
+
+
   const key12 = _.union(_.keys(obj1), _.keys(obj2));
 
   return key12.reduce((acc, currentValue) => {
