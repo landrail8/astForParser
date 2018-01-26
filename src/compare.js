@@ -22,33 +22,70 @@ const f = (file1, file2) => {
   const obj2 = parse(format2)(text2);
 
   console.log(obj1);
-  // console.log(obj2);
 
-  // соберем дерево по спарсенному объекту
-
-
-  const iter = (obj, arrayAST) => {
-
+  const makeAST = (obj, arrayAST) => {
     const arrForThisParent = _.keys(obj).reduce((acc, currentKey) => {
-
-      // console.log(_.keys(obj));
-      // console.log(currentKey);
-      // console.log(obj[currentKey]);
-
-
       if (obj[currentKey] instanceof Object) {
-        acc.push({ key: currentKey, status: 'added', children: iter(obj[currentKey], arrayAST) });
+        acc.push({ `${currentKey}`: { type: 'group', status: 'added', children: makeAST(obj[currentKey], []) } });
       } else {
-        acc.push({ key: currentKey, status: 'added' });
+        acc.push({ `${currentKey}`: { type: 'element', status: 'added' } });
       }
       return acc;
     }, []);
-
-    // console.log(arrForThisParent);
-
     return [...arrayAST, ...arrForThisParent];
   };
-  console.log(iter(obj1, []));
+
+  const AST = makeAST(obj1, []);
+
+  // const addDiffToAST = (AST, obj2) => {
+
+  // обойдем Объект 2 и сравним его с AST:
+  const iterObject2 = (AST, obj2) => {
+    _.keys(obj2).reduce((acc, currentKey) => {
+      if (obj2[currentKey] instanceof Object) {
+
+      } else {
+        const elemExist = _.keys(AST).reduce((findOut, cur) => {
+          if (currentKey === cur) return true;
+        }, false);
+        if (elemExist) {
+          console.log(`FIND EQUAL == ${AST[currentKey]}`);
+          AST[currentKey].status = 'equal';
+        }
+      }
+    }, []);
+  };
+
+
+//  }
+
+
+
+
+
+  console.log(JSON.stringify(AST));
+
+
+
+  // console.log(JSON.stringify(iterObject2(AST, obj2), null, '  '));
+  // console.log(AST);
+
+  // const iterAST = (node) => {
+  //   console.log(node.type);
+  //   switch (node.type) {
+  //     case 'group':
+  //       return `${node.status} ${node.key} ${node.children.map(iterAST).join('')}`;
+  //     //  break;
+  //     case 'element':
+  //       return `${node.status} ${node.key}`;
+  //     //  break;
+  //     default:
+  //   }
+  // };
+
+  // console.log(AST.map(iterAST));
+
+  // console.log(iter(obj1, []).toString());
 
   //
   // const reduceTree = (f, tree, acc) => {
